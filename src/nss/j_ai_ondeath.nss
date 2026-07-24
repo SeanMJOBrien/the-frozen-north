@@ -44,7 +44,9 @@ void main()
             SetIsDestroyable(FALSE, TRUE, TRUE);
         }
 
-        FloatingTextStringOnCreature(sText, GetMaster(OBJECT_SELF), FALSE);
+        object oMaster = GetMaster(OBJECT_SELF);
+        if (GetIsObjectValid(oMaster))
+            FloatingTextStringOnCreature(sText, oMaster, FALSE);
 
         if (Gibs(OBJECT_SELF))
         {

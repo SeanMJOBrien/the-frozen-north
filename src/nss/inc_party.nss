@@ -122,7 +122,7 @@ void SetPartyData(object oTarget = OBJECT_SELF)
           object oDev = GetLocalObject(GetModule(), "dev_lootvortex");
           nPlayerSize++;
           nTotalSize++;
-          nLevel = GetLevelFromXP(GetXP(oMbr));
+          nLevel = GetLevelFromXP(GetXP(oDev));
           nTotalLevels = nTotalLevels + nLevel;
           nHighestLevel = nLevel;
           nLow = nLevel;

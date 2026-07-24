@@ -31,10 +31,10 @@ void main()
 {
     object oPC = GetEnteringObject();
 
-    if (!GetHasEffect(EFFECT_TYPE_POLYMORPH))
+    if (!GetHasEffect(EFFECT_TYPE_POLYMORPH, oPC))
     {
-        SetLocalInt(OBJECT_SELF, "BASE_RACE_SET", 1);
-        SetLocalInt(OBJECT_SELF, "BASE_RACE", GetRacialType(oPC));
+        SetLocalInt(oPC, "BASE_RACE_SET", 1);
+        SetLocalInt(oPC, "BASE_RACE", GetRacialType(oPC));
     }
 
     SetCampaignString(GetPCPublicCDKey(oPC), "player_name", GetPCPlayerName(oPC));
@@ -74,8 +74,8 @@ void main()
 
     SetEventScript(oPC, EVENT_SCRIPT_CREATURE_ON_DAMAGED, "on_pc_damaged");
     SetEventScript(oPC, EVENT_SCRIPT_CREATURE_ON_BLOCKED_BY_DOOR, "on_pc_blocked");
-    SetEventScript(oPC, EVENT_SCRIPT_CREATURE_ON_MELEE_ATTACKED, "on_pc_spellcast");
-    SetEventScript(oPC, EVENT_SCRIPT_CREATURE_ON_SPELLCASTAT, "on_pc_attacked");
+    SetEventScript(oPC, EVENT_SCRIPT_CREATURE_ON_MELEE_ATTACKED, "on_pc_attacked");
+    SetEventScript(oPC, EVENT_SCRIPT_CREATURE_ON_SPELLCASTAT,    "on_pc_spellcast");
 
 // these items are deprecated
     DestroyObject(GetItemPossessedBy(oPC, "_pc_handbook"));

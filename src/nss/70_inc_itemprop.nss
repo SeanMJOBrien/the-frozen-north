@@ -412,15 +412,15 @@ void IPWildShapeHandleAbilityBonuses_continue(object oArmorNew, object oWeaponNe
     if(Fort > 0)
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_FORTITUDE,Fort > 12 ? 12 : Fort),oWeaponNew);
     else if(Fort < 0)
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_FORTITUDE,Fort > 12 ? 12 : Fort),oWeaponNew);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_FORTITUDE,abs(Fort) > 12 ? 12 : abs(Fort)),oWeaponNew);
     if(Will > 0)
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_WILL,Will > 12 ? 12 : Will),oWeaponNew);
     else if(Will < 0)
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,Will > 12 ? 12 : Will),oWeaponNew);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_WILL,abs(Will) > 12 ? 12 : abs(Will)),oWeaponNew);
     if(Reflex > 0)
     AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyBonusSavingThrow(IP_CONST_SAVEBASETYPE_REFLEX,Reflex > 12 ? 12 : Reflex),oWeaponNew);
     else if(Reflex < 0)
-    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_REFLEX,Reflex > 12 ? 12 : Reflex),oWeaponNew);
+    AddItemProperty(DURATION_TYPE_PERMANENT,ItemPropertyReducedSavingThrow(IP_CONST_SAVEBASETYPE_REFLEX,abs(Reflex) > 12 ? 12 : abs(Reflex)),oWeaponNew);
     //specific saves needs to be handled differenly (to support custom content)
     for(;HighestSave > -1;HighestSave--)
     {

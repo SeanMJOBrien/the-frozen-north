@@ -120,9 +120,7 @@ void main()
         }
         else if (GetObjectType(oTest) == OBJECT_TYPE_WAYPOINT && GetTag(oTest) == "maker2_trap")
         {
-            // Doing this in the loop causes TMI
-            //DelayCommand(6.0, TrapAtWaypoint(oTest));
-            DelayCommand(6.0, TrapAtWaypoint(oWPOctagon));
+            DelayCommand(6.0, TrapAtWaypoint(oTest));
         }
         else if (GetObjectType(oTest) == OBJECT_TYPE_WAYPOINT && GetTag(oTest) == "maker2_traplever")
         {

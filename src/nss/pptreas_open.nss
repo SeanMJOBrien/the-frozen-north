@@ -36,20 +36,17 @@ void main()
     CreateTreasure();
 
     int bRandom = d100();
-    if (bChanceFour <= bRandom)
+    if (bRandom <= bChanceTwo)
     {
         CreateTreasure();
-        CreateTreasure();
-        CreateTreasure();
-    }
-    else if (bChanceThree <= bRandom)
-    {
-        CreateTreasure();
-        CreateTreasure();
-    }
-    else if (bChanceTwo <= bRandom)
-    {
-        CreateTreasure();
+        if (bRandom <= bChanceThree)
+        {
+            CreateTreasure();
+            if (bRandom <= bChanceFour)
+            {
+                CreateTreasure();
+            }
+        }
     }
 
     int bChanceGold = 50;

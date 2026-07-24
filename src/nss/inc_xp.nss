@@ -329,7 +329,6 @@ float GetPartyXPValue(object oCreature, int bAmbush, float fAverageLevel, int iT
     int bBoss = GetLocalInt(oCreature, "boss");
     int bSemiBoss = GetLocalInt(oCreature, "semiboss");
     int bRare = GetLocalInt(oCreature, "rare");
-    float fMultiplier = 1.0;
     if (bBoss == 1)
     {
         fMultiplier *= 3.0;

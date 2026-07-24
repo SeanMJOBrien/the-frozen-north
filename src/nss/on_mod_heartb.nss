@@ -167,13 +167,11 @@ void DoRevive(object oDead)
                     {
                         nFaction = NWNX_Creature_GetFaction(oCreature);
 
-                        // if (nFaction == STANDARD_FACTION_COMMONER || nFaction == STANDARD_FACTION_DEFENDER || nFaction == STANDARD_FACTION_MERCHANT)
-                        if (STANDARD_FACTION_DEFENDER)
+                        if (nFaction == STANDARD_FACTION_COMMONER || nFaction == STANDARD_FACTION_DEFENDER || nFaction == STANDARD_FACTION_MERCHANT)
                         {
                             bFriend = TRUE;
                             oLastFriend = oCreature;
-                            //SendDebugMessage("Commoner/Defender/Merchant detected: "+GetName(oCreature));
-                            SendDebugMessage("Defender detected: "+GetName(oCreature));
+                            SendDebugMessage("Commoner/Defender/Merchant detected: "+GetName(oCreature));
                         }
                     }
 
@@ -283,7 +281,7 @@ void DoRevive(object oDead)
                      DestroyObject(oDead);
                      // Delete their store if it exists or it will be floating around in memory until restart
                      object oStore = GetLocalObject(oDead, "merchant");
-                     DestroyObject(oStore);
+                     if (GetIsObjectValid(oStore)) DestroyObject(oStore);
                  }
                  else // otherwise increment
                  {

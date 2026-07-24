@@ -282,7 +282,7 @@ void PopulateChestWeapon(string sSeedChestTag, string sPrependName, string sAppe
            case BASE_ITEM_DART:
            case BASE_ITEM_THROWINGAXE:
            case BASE_ITEM_SHURIKEN:
-                SetItemStackSize(oNewItem, 1);
+                SetItemStackSize(oNewItemStaging, 1);
            break;
        }
 

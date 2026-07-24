@@ -33,10 +33,13 @@ void GeneratePickpocketItem(int nAllowedLootTypes=LOOT_TYPE_MISC)
 {
     // Avoids increasing high tier item odds on bosses/semibosses
     object oItem = SelectLootItemFromACR(OBJECT_SELF, GetLocalInt(OBJECT_SELF, "area_cr"), nAllowedLootTypes);
-    SetDroppableFlag(oItem, FALSE);
-    SetPickpocketableFlag(oItem, TRUE);
-    SetLocalInt(OBJECT_SELF, "pickpocket_xp", 1);
-    SetLocalInt(oItem, "pickpocket_xp", 1);
+    if (GetIsObjectValid(oItem))
+    {
+        SetDroppableFlag(oItem, FALSE);
+        SetPickpocketableFlag(oItem, TRUE);
+        SetLocalInt(OBJECT_SELF, "pickpocket_xp", 1);
+        SetLocalInt(oItem, "pickpocket_xp", 1);
+    }
 }
 
 //const int GS_TIMEOUT = 7200; //2 hours

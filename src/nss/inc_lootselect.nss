@@ -746,7 +746,7 @@ json GetStandardLootRarityWeights(int nLootType)
 {
     json jArr = JsonArray();
     JsonArrayInsertInplace(jArr, JsonInt(1)); // LOOT_RARITY_UNDEFINED
-    if (nLootType & (LOOT_TYPE_WEAPON_MELEE + LOOT_TYPE_WEAPON_RANGE) > 0)
+    if ((nLootType & (LOOT_TYPE_WEAPON_MELEE + LOOT_TYPE_WEAPON_RANGE)) > 0)
     {
         JsonArrayInsertInplace(jArr, JsonInt(WEAPON_COMMON_WEIGHT));
         JsonArrayInsertInplace(jArr, JsonInt(WEAPON_UNCOMMON_WEIGHT));
@@ -1214,6 +1214,7 @@ object SelectLootItemFixedCategories(object oTargetInventory, int nTier, int nLo
         oItem = GetNextItemInInventory(oChest);
     }
 
+    if (!GetIsObjectValid(oItem)) return OBJECT_INVALID;
     if (GetPlotFlag(oItem) && GetObjectType(oTargetInventory) == OBJECT_TYPE_STORE)
     {
         return OBJECT_INVALID; // do not allow plot items to be created on stores

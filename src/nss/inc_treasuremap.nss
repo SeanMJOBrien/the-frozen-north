@@ -1778,7 +1778,7 @@ void UseTreasureMap(object oMap)
             // Solution exists and is valid.
             // Just check the puzzle's ACR fits with the map's
             string sQuery = "SELECT minacr " +
-                "FROM treasuremaps WHERE puzzleid <= @puzzleid";
+                "FROM treasuremaps WHERE puzzleid = @puzzleid";
             sqlquery sql = SqlPrepareQueryCampaign("tmapsolutions", sQuery);
             SqlBindInt(sql, "@puzzleid", nPuzzleID);
             SqlStep(sql);
@@ -1982,7 +1982,7 @@ void DigForTreasure(object oPC)
         {
             sSucceedMsg = "After a careful search, you find the hidden treasure beneath a loose plank!";
         }
-        if (nSurfacemat == 9)
+        else if (nSurfacemat == 9)
         {
             sSucceedMsg = "After a careful search, you find the hidden treasure beneath the carpet!";
         }

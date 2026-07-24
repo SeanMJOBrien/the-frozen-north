@@ -190,7 +190,7 @@ void DecrementLootAndDestroyIfEmpty(object oOpener, object oLootParent, object o
 object GetPersonalLootForPC(object oLootSource, object oPC, int bCreateIfMissing=FALSE)
 {
     object oPersonalLoot = GetObjectByUUID(GetLocalString(oLootSource, "personal_loot_"+GetPCPublicCDKey(oPC, TRUE)));
-    if (!GetIsObjectValid(oPersonalLoot))
+    if (!GetIsObjectValid(oPersonalLoot) && bCreateIfMissing)
     {
         vector vPosition = GetPosition(oLootSource);
         vPosition.z = -100.0; // Make the personal loot go under the map

@@ -13,10 +13,22 @@
 
 void main()
 {
-    RandomiseGenderAndAppearance(OBJECT_SELF);
-
     int bRanged = 0;
     string sResRef = GetResRef(OBJECT_SELF);
+
+    // Blueprints only vary Race to give each named bandit type a fixed
+    // appearance (e.g. bandit_fighter was always dwarf) - randomise it here
+    // like every other rolled trait, and before rolling appearance below so
+    // the head/portrait get picked for the final race, not the blueprint's
+    // original one (mismatched head-index range across races otherwise
+    // produces a missing head). duergar_slave also runs this script but
+    // isn't a bandit, so it's excluded via the resref prefix check.
+    if (GetStringLeft(sResRef, 6) == "bandit")
+    {
+        RandomiseCreatureRacialType(OBJECT_SELF);
+    }
+
+    RandomiseGenderAndAppearance(OBJECT_SELF);
 
     if (sResRef == "bandit_mage")
     {

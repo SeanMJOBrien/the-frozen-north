@@ -7,7 +7,7 @@ void main()
     // if trap already done, no need to make them!
     if (GetLocalInt(OBJECT_SELF, "trap_fired")) { return; }
     object oSling = GetLocalObject(OBJECT_SELF, "puzzle_sling");
-    if (!GetIsObjectValid(oSling) || (GetAreaFromLocation(GetLocation(oSling)) == OBJECT_SELF && !GetIsObjectValid(GetItemPossessor(oSling))))
+    if (!GetIsObjectValid(oSling) || GetAreaFromLocation(GetLocation(oSling)) != OBJECT_SELF || GetIsObjectValid(GetItemPossessor(oSling)))
     {
         object oWP = GetWaypointByTag("maker4_trap");
         vector vPos = GetPosition(oWP);

@@ -126,26 +126,26 @@ void main()
             struct abilities abil2;
             if(!bArmor)
             {
-                abil2 = IPGetAbilityBonuses(abil,oArmorOld);
-                abil2 = IPGetAbilityBonuses(abil,oHelmetOld);
-                abil2 = IPGetAbilityBonuses(abil,oShield);
+                abil2 = IPGetAbilityBonuses(abil2,oArmorOld);
+                abil2 = IPGetAbilityBonuses(abil2,oHelmetOld);
+                abil2 = IPGetAbilityBonuses(abil2,oShield);
             }
             if(!bItems)
             {
-                abil2 = IPGetAbilityBonuses(abil,oRing1Old);
-                abil2 = IPGetAbilityBonuses(abil,oRing2Old);
-                abil2 = IPGetAbilityBonuses(abil,oAmuletOld);
-                abil2 = IPGetAbilityBonuses(abil,oCloakOld);
-                abil2 = IPGetAbilityBonuses(abil,oBeltOld);
-                abil2 = IPGetAbilityBonuses(abil,oBootsOld);
+                abil2 = IPGetAbilityBonuses(abil2,oRing1Old);
+                abil2 = IPGetAbilityBonuses(abil2,oRing2Old);
+                abil2 = IPGetAbilityBonuses(abil2,oAmuletOld);
+                abil2 = IPGetAbilityBonuses(abil2,oCloakOld);
+                abil2 = IPGetAbilityBonuses(abil2,oBeltOld);
+                abil2 = IPGetAbilityBonuses(abil2,oBootsOld);
             }
             if(!bArms)
             {
-                abil2 = IPGetAbilityBonuses(abil,oArmsOld);
+                abil2 = IPGetAbilityBonuses(abil2,oArmsOld);
             }
             if(!bWeapon)
             {
-                abil2 = IPGetAbilityBonuses(abil,oWeaponOld);
+                abil2 = IPGetAbilityBonuses(abil2,oWeaponOld);
             }
             if(GetLevelByClass(CLASS_TYPE_WIZARD,oPC))
             {
