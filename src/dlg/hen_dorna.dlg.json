@@ -529,25 +529,6 @@
                 "type": "byte",
                 "value": 0
               }
-            },
-            {
-              "__struct_id": 3,
-              "Active": {
-                "type": "resref",
-                "value": ""
-              },
-              "ConditionParams": {
-                "type": "list",
-                "value": []
-              },
-              "Index": {
-                "type": "dword",
-                "value": 10
-              },
-              "IsChild": {
-                "type": "byte",
-                "value": 0
-              }
             }
           ]
         },
@@ -890,55 +871,6 @@
           "type": "cexolocstring",
           "value": {
             "0": "Berronar help me. I'll strike you down where you stand!"
-          }
-        }
-      },
-      {
-        "__struct_id": 13,
-        "ActionParams": {
-          "type": "list",
-          "value": []
-        },
-        "Animation": {
-          "type": "dword",
-          "value": 0
-        },
-        "AnimLoop": {
-          "type": "byte",
-          "value": 1
-        },
-        "Comment": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "Delay": {
-          "type": "dword",
-          "value": 4294967295
-        },
-        "Quest": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "RepliesList": {
-          "type": "list",
-          "value": []
-        },
-        "Script": {
-          "type": "resref",
-          "value": ""
-        },
-        "Sound": {
-          "type": "resref",
-          "value": ""
-        },
-        "Speaker": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "Text": {
-          "type": "cexolocstring",
-          "value": {
-            "0": "<CUSTOM6510>"
           }
         }
       }
@@ -1580,71 +1512,6 @@
           "type": "cexolocstring",
           "value": {
             "0": "I'd like to buy off some of the loot that you picked up."
-          }
-        }
-      },
-      {
-        "__struct_id": 10,
-        "ActionParams": {
-          "type": "list",
-          "value": []
-        },
-        "Animation": {
-          "type": "dword",
-          "value": 0
-        },
-        "AnimLoop": {
-          "type": "byte",
-          "value": 1
-        },
-        "Comment": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "Delay": {
-          "type": "dword",
-          "value": 4294967295
-        },
-        "EntriesList": {
-          "type": "list",
-          "value": [
-            {
-              "__struct_id": 0,
-              "Active": {
-                "type": "resref",
-                "value": "hen_chk_classes"
-              },
-              "ConditionParams": {
-                "type": "list",
-                "value": []
-              },
-              "Index": {
-                "type": "dword",
-                "value": 13
-              },
-              "IsChild": {
-                "type": "byte",
-                "value": 0
-              }
-            }
-          ]
-        },
-        "Quest": {
-          "type": "cexostring",
-          "value": ""
-        },
-        "Script": {
-          "type": "resref",
-          "value": ""
-        },
-        "Sound": {
-          "type": "resref",
-          "value": ""
-        },
-        "Text": {
-          "type": "cexolocstring",
-          "value": {
-            "0": "How are you trained?"
           }
         }
       }
