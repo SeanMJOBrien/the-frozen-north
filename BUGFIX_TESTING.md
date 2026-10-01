@@ -31,8 +31,8 @@ Blueprint notes (in case the NPC needs to be rebuilt or tweaked):
   every other blueprint in `src/`, so nasher round-trips it without noise.
 
 The conversation has a single NPC entry ("Welcome, developer. Select a bug fix
-to test.") and 14 replies: options 1–13 each fire one `dlg_tst_*` script via
-the reply's action script and loop back to the menu; option 14 exits.
+to test.") and 15 replies: options 1–14 each fire one `dlg_tst_*` script via
+the reply's action script and loop back to the menu; option 15 exits.
 
 ### Setup
 
@@ -232,6 +232,30 @@ and item agree, `FAIL` when the flag is set with no item. *Prerequisite: best
 run in an area with `cr=0` (the test prints the area CR and tells you if the
 area is unsuitable for the clean negative case).*
 
+### 14. `party_credit.nss` — no loot bag when a death effect makes the kill
+
+`bDestroyed` was derived from hit points alone
+(`GetCurrentHitPoints(OBJECT_SELF) <= 0`). A creature killed by a death effect
+— the engine's coup de grace on a sleeping target, finger of death, implosion,
+destruction, wail of the banshee, power word kill, slay living, phantasmal
+killer, weird, circle of death, death gazes — dies with a *positive* hit point
+total, so the script took the branch meant for an intact placeable and used the
+corpse itself as the loot container. Personal loot was then created under the
+map parented to a corpse that has no `loot_open` handler, so every drop was
+generated and immediately orphaned: no loot bag, no gold, and no `quest_item`,
+which soft-locked bounty chains on the 16 creatures that carry one (mostly
+bosses: `ogre_lord`, `troll_chieftain`, `silverback`, `zamithra`, `desther`,
+`gulnan`, `serana`, and the escaped convicts). XP was still awarded, which is
+the diagnostic signature. Dead creatures are now treated as destroyed
+regardless of hit points; placeables are untouched, so an *opened* (rather than
+bashed) chest still uses itself as the container.
+
+**Test (option 14):** spawns `ogre_lord` next to the NPC, clears its
+`defeated_webhook` local (so a test kill doesn't post to Discord), tags it as
+player-killed, and kills it with `EffectDeath()`. Reports the corpse's
+remaining hit points and the number of new `_loot_container` placeables nearby
+— `PASS` when a loot bag spawned, `FAIL` when none did.
+
 ---
 
 ## Fixes not covered by the dialog (manual / compile-only)
@@ -267,7 +291,7 @@ production behavior.
 
 ## Verification status
 
-- All 14 `dlg_tst_*` scripts compile clean against `nwn-base-scripts` with
+- All 15 `dlg_tst_*` scripts compile clean against `nwn-base-scripts` with
   `nwnsc` (run from `src/nss/`, since `nwnsc -b` mirrors input paths):
   `../../../nwn-tools/linux/nwnsc/nwnsc -i ../../nwn-base-scripts -i . -b <out> dlg_tst_*.nss`
 - `dev_bugtest.dlg.json` and `dev_bugtest.utc.json` round-trip through

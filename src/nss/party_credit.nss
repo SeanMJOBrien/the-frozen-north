@@ -134,6 +134,16 @@ void main()
 // we shall roll to see if treasure even drops at that point.
     int bDestroyed = GetCurrentHitPoints(OBJECT_SELF) <= 0;
 
+// death effects (an engine coup de grace on a sleeping target, finger of death,
+// implosion, ...) kill without ever reducing hit points, so a dead creature can still
+// have a positive hit point total. without this the corpse is treated like an intact
+// container and no loot bag is ever spawned.
+// only creatures: live placeables call this script and rely on bDestroyed being FALSE
+    if (!bDestroyed && GetObjectType(OBJECT_SELF) == OBJECT_TYPE_CREATURE && GetIsDead(OBJECT_SELF))
+    {
+        bDestroyed = TRUE;
+    }
+
     int bBoss = GetLocalInt(OBJECT_SELF, "boss");
     int bSemiBoss = GetLocalInt(OBJECT_SELF, "semiboss");
     int bRare = GetLocalInt(OBJECT_SELF, "rare");
