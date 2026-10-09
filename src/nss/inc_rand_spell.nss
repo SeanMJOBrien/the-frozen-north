@@ -655,13 +655,27 @@ json _AppendSpellDataToSpellLevelArray(json jObj, int nSpellLevel, int nSpell, i
 //jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
 //nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));;
 
-json _AddSpellFromTempArrays(object oCreature, int nClass, int nWeightSum, json jObj)
+json _AddSpellFromTempArrays(object oCreature, int nClass, int nWeightSum, json jObj, int nFallbackLevel=-1)
 {
     //WriteTimestampedLogEntry("_AddSpellFromTempArrays: weightsum = " + IntToString(nWeightSum) + " arrsize=" + IntToString(Array_Size(RAND_SPELL_TEMP_SPELLIDS)));
     //Array_Debug_Dump(RAND_SPELL_TEMP_WEIGHTS, "Spell weights");
     //Array_Debug_Dump(RAND_SPELL_TEMP_SPELLIDS, "Spell ids");
     if (nWeightSum == 0 || Array_Size(RAND_SPELL_TEMP_WEIGHTS) == 0)
     {
+        // Every candidate for this slot was weighted out (feat-gated, already known, etc).
+        // Without nFallbackLevel the slot is just dropped, leaving this level's spellbook
+        // shorter than its available slot count. Callers that pass their level fill the
+        // slot with a safe default (Resistance) instead of silently losing it.
+        if (nFallbackLevel >= 0 && ((nClass != CLASS_TYPE_SORCERER && nClass != CLASS_TYPE_BARD) || !GetHasSpell(SPELL_RESISTANCE, oCreature)))
+        {
+            if (nClass == CLASS_TYPE_SORCERER || nClass == CLASS_TYPE_BARD)
+            {
+                NWNX_Creature_AddKnownSpell(oCreature, nClass, nFallbackLevel, SPELL_RESISTANCE);
+            }
+            jObj = _AppendSpellDataToSpellLevelArray(jObj, nFallbackLevel, SPELL_RESISTANCE, METAMAGIC_NONE, -1);
+            jObj = JsonObjectSet(jObj, "LastAdded", JsonInt(SPELL_RESISTANCE));
+            return jObj;
+        }
         jObj = JsonObjectSet(jObj, "LastAdded", JsonInt(-1));
         return jObj;
     }
@@ -1147,7 +1161,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_SUMMON_CREATURE_IX, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_GATE, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 9);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_IX || nAdded == SPELL_GATE)
             {
@@ -1200,7 +1214,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_SUMMON_CREATURE_VIII, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_CREATE_UNDEAD, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 8);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_VIII || nAdded == SPELL_CREATE_UNDEAD)
             {
@@ -1281,7 +1295,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
                nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_SUMMON_CREATURE_VII, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
                nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_MORDENKAINENS_SWORD, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
            }
-           jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+           jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 7);
            nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
            if (nAdded == SPELL_SUMMON_CREATURE_VII || nAdded == SPELL_MORDENKAINENS_SWORD)
            {
@@ -1360,7 +1374,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
             {
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_SUMMON_CREATURE_VI, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 6);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_VI)
             {
@@ -1457,7 +1471,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_MESTILS_ACID_SHEATH, nClass, sClass2da, 60 * cwThisAssignment.nWeightDefences);
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_ELEMENTAL_SHIELD, nClass, sClass2da, 40 * cwThisAssignment.nWeightDefences, METAMAGIC_EXTEND);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 5);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_V || nAdded == SPELL_ANIMATE_DEAD)
             {
@@ -1561,7 +1575,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
             {
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_ELEMENTAL_SHIELD, nClass, sClass2da, 50 * cwThisAssignment.nWeightDefences);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 4);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_IV || nAdded == SPELL_ANIMATE_DEAD)
             {
@@ -1653,7 +1667,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
             {
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_DEATH_ARMOR, nClass, sClass2da, 30 * cwThisAssignment.nWeightDefences, METAMAGIC_EXTEND);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 3);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_III)
             {
@@ -1741,7 +1755,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
             {
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_DEATH_ARMOR, nClass, sClass2da, 30 * cwThisAssignment.nWeightDefences);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 2);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_II)
             {
@@ -1808,7 +1822,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_SUMMON_CREATURE_I, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_SHELGARNS_PERSISTENT_BLADE, nClass, sClass2da, 40 * cwThisAssignment.nHighestCategoryWeight);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 1);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));
             if (nAdded == SPELL_SUMMON_CREATURE_I || nAdded == SPELL_SHELGARNS_PERSISTENT_BLADE)
             {
@@ -1838,7 +1852,7 @@ void _RandomSpellbookPopulateArcane(int nSpellbookType, object oCreature, int nC
             {
                 nWeightSum += _AddToRandomSpellTempArrays(oCreature, SPELL_RESISTANCE, nClass, sClass2da, 80 * cwThisAssignment.nWeightDefences);
             }
-            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj);
+            jObj = _AddSpellFromTempArrays(oCreature, nClass, nWeightSum, jObj, 0);
             nAdded = JsonGetInt(JsonObjectGet(jObj, "LastAdded"));;
             nAssigned++;
             nLeft--;
