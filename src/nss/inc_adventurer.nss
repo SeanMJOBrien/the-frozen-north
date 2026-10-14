@@ -308,13 +308,14 @@ int GetRacialTypeForAdventurerPath(int nPath)
         }
         break;
     }
-    int nHumanWeight = 100;
-    int nDwarfWeight = 100;
-    int nHalfelfWeight = 100;
-    int nElfWeight = 100;
-    int nGnomeWeight = 100;
-    int nHalforcWeight = 100;
-    int nHalflingWeight = 100;
+    // Scaled x20 so the /= 20 penalties below stay integral
+    int nHumanWeight = RACE_WEIGHT_HUMAN * 20;
+    int nDwarfWeight = RACE_WEIGHT_DWARF * 20;
+    int nHalfelfWeight = RACE_WEIGHT_HALFELF * 20;
+    int nElfWeight = RACE_WEIGHT_ELF * 20;
+    int nGnomeWeight = RACE_WEIGHT_GNOME * 20;
+    int nHalforcWeight = RACE_WEIGHT_HALFORC * 20;
+    int nHalflingWeight = RACE_WEIGHT_HALFLING * 20;
     switch (nPath)
     {
         // Barbarians and the strength bonus from rage just seems like a poor idea on small stature races
@@ -355,7 +356,7 @@ int GetRacialTypeForAdventurerPath(int nPath)
         }
     }
     int nWeightSum = nHumanWeight + nDwarfWeight + nElfWeight + nHalfelfWeight + nHalforcWeight + nHalflingWeight + nGnomeWeight;
-    int nRoll = Random(nWeightSum+1);
+    int nRoll = Random(nWeightSum);
     if (nRoll < nHumanWeight) { return RACIAL_TYPE_HUMAN; }
     nRoll -= nHumanWeight;
     if (nRoll < nDwarfWeight) { return RACIAL_TYPE_DWARF; }

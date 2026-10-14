@@ -5,8 +5,21 @@
 
 // This is an include for changing creatures' appearance and gender.
 
+// Neverwinter demographic weights (percent) for random spawns such as bandits
+// and adventurers. Half-orcs are not in the census figures; 2% by design choice.
+const int RACE_WEIGHT_HUMAN = 67;
+const int RACE_WEIGHT_HALFELF = 17;
+const int RACE_WEIGHT_DWARF = 9;
+const int RACE_WEIGHT_ELF = 2;
+const int RACE_WEIGHT_HALFLING = 2;
+const int RACE_WEIGHT_GNOME = 1;
+const int RACE_WEIGHT_HALFORC = 2;
+
 // Randomises a creature's racial type, according to the weight parameters.
 void RandomiseCreatureRacialType(object oCreature=OBJECT_SELF, int nDwarfWeight=1, int nElfWeight=1, int nGnomeWeight=1,  int nHalfElfWeight=1, int nHalfOrcWeight=1, int nHalflingWeight=1, int nHumanWeight=1);
+
+// Randomises a creature's racial type using the Neverwinter demographic weights.
+void RandomiseCreatureRacialTypeNeverwinter(object oCreature=OBJECT_SELF);
 
 // Randomises a creature's racial type, based on its class(es).
 void RandomiseCreatureRacialTypeBasedOnClass(object oCreature=OBJECT_SELF);
@@ -75,6 +88,11 @@ void RandomiseCreatureRacialType(object oCreature=OBJECT_SELF, int nDwarfWeight=
     nRoll -= nHalfOrcWeight;
     if (nRoll <= nHalflingWeight) { SetRacialTypeAndAppearance(oCreature, RACIAL_TYPE_HALFLING); return; }
     SetRacialTypeAndAppearance(oCreature, RACIAL_TYPE_HUMAN);
+}
+
+void RandomiseCreatureRacialTypeNeverwinter(object oCreature=OBJECT_SELF)
+{
+    RandomiseCreatureRacialType(oCreature, RACE_WEIGHT_DWARF, RACE_WEIGHT_ELF, RACE_WEIGHT_GNOME, RACE_WEIGHT_HALFELF, RACE_WEIGHT_HALFORC, RACE_WEIGHT_HALFLING, RACE_WEIGHT_HUMAN);
 }
 
 void RandomiseCreatureRacialTypeBasedOnClass(object oCreature=OBJECT_SELF)

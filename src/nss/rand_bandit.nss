@@ -25,7 +25,7 @@ void main()
     // isn't a bandit, so it's excluded via the resref prefix check.
     if (GetStringLeft(sResRef, 6) == "bandit")
     {
-        RandomiseCreatureRacialType(OBJECT_SELF);
+        RandomiseCreatureRacialTypeNeverwinter(OBJECT_SELF);
     }
 
     RandomiseGenderAndAppearance(OBJECT_SELF);
