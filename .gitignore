@@ -33,3 +33,4 @@ nwsync/*
 *.ini
 servervault/*
 override/*
+.DS_Store
