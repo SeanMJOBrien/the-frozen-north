@@ -4176,7 +4176,9 @@ void LoadSpellbook(int nClass, object oCreature=OBJECT_SELF, int nFixedIndex=-1,
                 SetMemorizedSpell(oCreature, nClass, i, nIndex, nSpell, TRUE, nMetamagic, nDomain);
                 if (GetMemorizedSpellId(oCreature, nClass, i, nIndex) != nSpell)
                 {
-                    WriteTimestampedLogEntry("Failed to set mem spell " + IntToString(nSpell) + " at level " + IntToString(i) + " index " + IntToString(nSpellIndex));
+                    WriteTimestampedLogEntry("Failed to set mem spell " + IntToString(nSpell) + " at level " + IntToString(i) + " index " + IntToString(nSpellIndex)
+                        + " for " + GetName(oCreature) + " (" + GetResRef(oCreature) + ", class " + IntToString(nClass) + ", "
+                        + IntToString(GetMemorizedSpellCountByLevel(oCreature, nClass, i)) + " slots at that level)");
                     if (nSpellIndex == 0) { bFailedAnIndexZero = 1; }
                 }
             }
